@@ -27,7 +27,7 @@ collection.update_many(
 
 # B. Find a movie with your genre (short) in imdb and insert it into your database with the fields listed in the hw description.
 
-'''
+
 collection.insert_one(
   { "title": "The Silent Child",
     "year": 2017,
@@ -37,7 +37,7 @@ collection.insert_one(
     "imdb": { "id": 6186970, "rating": 7.7, " votes": 1077 }
   }
 )
-'''
+
 
 # C. Use the aggregation framework to find the total number of movies in your genre.
 
