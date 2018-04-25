@@ -1,0 +1,116 @@
+Mehmet Emre Sonmez	mes2311
+
+For Homework4, I modeled Star Wards, only including 
+a select few characters from the universe.
+
+Note: I added the affiliation attribute for some characters here
+to keep it interesting although I hadn't included that in my drawing.
+
+################################
+
+NODE CREATION COMMANDS:
+
+CREATE (n:Person {name: 'Luke Skywalker', affiliation: 'Resistance'})
+CREATE (n:Person {name: 'Princess Leia', affiliation: 'Resistance'})
+CREATE (n:Person {name: 'Darth Vader', affiliation: 'Galactic Empire'})
+CREATE (n:Person {name: 'Han Solo', affiliation: 'Resistance'})
+CREATE (n:Person {name: 'Kylo Ren', affiliation: 'Galactic Empire'})
+CREATE (n:Wookiee {name: 'Chewbacca'})
+CREATE (n:Spaceship {name: 'Millenium Falcon'})
+CREATE (n:Route {name: 'Kessel Run'})
+
+################################
+
+RELATIONSHIP CREATION COMMANDS:
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Luke Skywalker' AND b.name = 'Darth Vader'
+CREATE (a)-[r:DEFEATS {when: 'episode VI'}]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Luke Skywalker' AND b.name = 'Darth Vader'
+CREATE (a)-[r:FINDS_OUT {what: 'Vaders Identity', when: 'episode VI'}]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Darth Vader' AND b.name = 'Luke Skywalker'
+CREATE (a)-[r:FATHER_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Darth Vader' AND b.name = 'Princess Leia'
+CREATE (a)-[r:FATHER_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Luke Skywalker' AND b.name = 'Pricess Leia'
+CREATE (a)-[r:SIBLING_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Princess Leia' AND b.name = 'Luke Skywalker'
+CREATE (a)-[r:SIBLING_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Princess Leia' AND b.name = 'Han Solo'
+CREATE (a)-[r:LOVES]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Han Solo' AND b.name = 'Princess Leia'
+CREATE (a)-[r:LOVES]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Han Solo' AND b.name = 'Princess Leia'
+CREATE (a)-[r:LEAVES {when: 'unknown'}]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Han Solo' AND b.name = 'Princess Leia'
+CREATE (a)-[r:RETURNS_TO {when: 'episode VII'}]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Princess Leia' AND b.name = 'Kylo Ren'
+CREATE (a)-[r:MOTHER_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Han Solo' AND b.name = 'Kylo Ren'
+CREATE (a)-[r:FATHER_OF]->(b)
+
+MATCH (a:Person), (b:Person)
+WHERE a.name = 'Kylo Ren' AND b.name = 'Han Solo'
+CREATE (a)-[r:KILLS {when: 'episode VII'}]->(b)
+
+MATCH (a:Person), (b:Wookiee)
+WHERE a.name = 'Han Solo' AND b.name = 'Chewbacca'
+CREATE (a)-[r:FRIEND_OF]->(b)
+
+MATCH (a:Wookiee), (b:Person)
+WHERE a.name = 'Chewbacca' AND b.name = 'Han Solo'
+CREATE (a)-[r:FRIEND_OF]->(b)
+
+MATCH (a:Wookiee), (b:Spaceship)
+WHERE a.name = 'Chewbacca' AND b.name = 'Millenium Falcon'
+CREATE (a)-[r:PILOTS]->(b)
+
+MATCH (a:Person), (b:Spaceship)
+WHERE a.name = 'Han Solo' AND b.name = 'Millenium Falcon'
+CREATE (a)-[r:PILOTS]->(b)
+
+MATCH (a:Person), (b:Spaceship)
+WHERE a.name = 'Han Solo' AND b.name = 'Millenium Falcon'
+CREATE (a)-[r:OWNS]->(b)
+
+MATCH (a:Spaceship), (b:Route)
+WHERE a.name = 'Millenium Falcon' AND b.name = 'Kessel Run'
+CREATE (a)-[r:COMPLETED {time: '12 parsecs'}]->(b)
+
+#################################
+
+2 EXAMPLE QUERIES:
+
+Find all parent child relationships
+
+MATCH (parent)-[r:FATHER_OF|:MOTHER_OF]->(child)
+RETURN parent.name, type(r), child.name
+
+Find all pilots that completed the Kessel Run and print their names,
+spaceship name and the time of completing the run
+
+MATCH (pilot)-[r:PILOTS]->(ship)-[t:COMPLETED]->(route)
+WHERE route.name = 'Kessel Run'
+RETURN pilot.name, type(r), ship.name, route.name, t.time 
