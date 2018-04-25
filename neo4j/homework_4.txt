@@ -1,6 +1,6 @@
 Mehmet Emre Sonmez	mes2311
 
-For Homework4, I modeled Star Wards, only including 
+For Homework4, I modeled Star Wars, only including 
 a select few characters from the universe.
 
 Note: I added the affiliation attribute for some characters here
