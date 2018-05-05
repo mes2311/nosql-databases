@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Mehmet Emre Sonmez	mes2311
 
 For Homework4, I modeled Star Wars, only including 
@@ -114,3 +115,12 @@ spaceship name and the time of completing the run
 MATCH (pilot)-[r:PILOTS]->(ship)-[t:COMPLETED]->(route)
 WHERE route.name = 'Kessel Run'
 RETURN pilot.name, type(r), ship.name, route.name, t.time 
+=======
+// The scenario you have used for your schema is:
+
+
+// This is an example. Your own commands should *not* be commented out so we can pipe the file into the cypher-shell.
+// If you'd like to test your commands, you can run 'cat homework_4.txt | cypher-shell -u neo4j -p test' from
+// the vagrant box command line. Make sure neo4j is running first.
+// CREATE (a:person { name: 't' });
+>>>>>>> 5f9bb96796bc3790902319b2d67d9ee465af9713
